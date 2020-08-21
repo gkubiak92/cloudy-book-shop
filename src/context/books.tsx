@@ -3,9 +3,9 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
 import { listBooks } from 'api/queries';
 import { processOrder } from 'api/mutations';
-import { BookContext } from './types';
+import { BookContextType } from './types';
 
-const BookContext = React.createContext<Partial<BookContext>>({
+const BookContext = React.createContext<Partial<BookContextType>>({
   books: [],
   featured: [],
   loading: false,
@@ -60,4 +60,4 @@ const BookProvider: React.FC = ({ children }) => {
   );
 };
 
-export { BookContext, BookProvider };
+export { BookContextType as BookContext, BookProvider };

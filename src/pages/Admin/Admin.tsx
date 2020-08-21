@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-import { createBook } from '/api/mutations';
-import config from '/aws-exports';
+import { createBook } from 'api/mutations';
+import config from 'aws-exports';
 import { State } from './types';
 
 const { aws_user_files_s3_bucket_region: region, aws_user_files_s3_bucket: bucket } = config;

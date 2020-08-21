@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { CartContext } from './types';
+import { CartContextType } from './types';
 
-const CartContext = React.createContext<Partial<CartContext>>({
+const CartContext = React.createContext<Partial<CartContextType>>({
   cart: [],
   total: 0,
 });
@@ -60,4 +60,4 @@ const CartProvider: React.FC = ({ children }) => {
   );
 };
 
-export { CartProvider, CartContext };
+export { CartProvider, CartContextType as CartContext };

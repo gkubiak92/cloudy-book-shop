@@ -1,11 +1,11 @@
-export interface BookContext {
+export interface BookContextType {
   books: any[];
   featured: any[];
   loading: boolean;
   checkout: any;
 }
 
-export interface CartContext {
+export interface CartContextType {
   cart: any[];
   total: number;
   addToCart: any;
