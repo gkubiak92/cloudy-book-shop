@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// Amplify
+import Amplify from 'aws-amplify';
+// Pages
+import Home from 'pages/Home';
+import Error from 'pages/Error/Error';
+import Books from 'pages/Books/Books';
+import Cart from 'pages/Cart/Cart';
+import Checkout from 'pages/Checkout/Checkout';
+import BookDetails from 'pages/BookDetails/BookDetails';
+import Admin from 'pages/Admin/Admin';
 
-function App() {
+// Components
+import Header from './components/Header';
+
+// Amplify Configurations
+import awsExports from './aws-exports';
+Amplify.configure(awsExports);
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='/cart' component={Cart} />
+        <Route path='/checkout' component={Checkout} />
+        <Route exact path='/books' component={Books} />
+        <Route path='/books/:id' children={<BookDetails></BookDetails>} />
+        <Route path='/admin' component={Admin} />
+        <Route path='*' component={Error} />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
