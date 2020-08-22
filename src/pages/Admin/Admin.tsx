@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { AmplifyAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-import { createBook } from 'api/mutations';
+import { createBook } from 'graphql/mutations';
 import config from 'aws-exports';
 import { State } from './types';
 
@@ -19,7 +19,7 @@ const Admin = () => {
     featured: false,
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       if (!bookDetails.title || !bookDetails.price) return;
@@ -37,9 +37,9 @@ const Admin = () => {
     }
   };
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const file = e.target.files[0];
+    const file = e.target.files![0];
     const extension = file.name.split('.')[1];
     const name = file.name.split('.')[0];
     const key = `images/${uuidv4()}${name}.${extension}`;

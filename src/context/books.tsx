@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
-import { listBooks } from 'api/queries';
-import { processOrder } from 'api/mutations';
+import { listBooks } from 'graphql/queries';
+import { processOrder } from 'graphql/mutations';
 import { BookContextType } from './types';
+import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api-graphql/lib-esm/types/';
+import { GraphQLResult } from '@aws-amplify/api';
+import { ListBooksQuery } from 'API';
 
 const BookContext = React.createContext<Partial<BookContextType>>({
   books: [],
@@ -37,17 +40,19 @@ const BookProvider: React.FC = ({ children }) => {
     try {
       setLoading(true);
       // Switch authMode to API_KEY for public access
-      const { data } = await API.graphql({
+      const { data } = (await API.graphql({
         query: listBooks,
-        authMode: 'API_KEY',
-      });
-      const books = data.listBooks.items;
-      const featured = books.filter((book: any) => {
-        return !!book.featured;
-      });
-      setBooks(books);
-      setFeatured(featured);
-      setLoading(false);
+        authMode: GRAPHQL_AUTH_MODE.API_KEY,
+      })) as GraphQLResult<ListBooksQuery>;
+      if (data !== null) {
+        const books = data?.listBooks?.items;
+        const featured = books?.filter((book: any) => {
+          return !!book.featured;
+        });
+        setBooks(books);
+        setFeatured(featured);
+        setLoading(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -60,4 +65,4 @@ const BookProvider: React.FC = ({ children }) => {
   );
 };
 
-export { BookContextType as BookContext, BookProvider };
+export { BookContext, BookProvider };

@@ -8,7 +8,7 @@ const Cart = () => {
   const history = useHistory();
   const { cart, total, increaseAmount, decreaseAmount } = useContext(CartContext);
 
-  if (!cart.length) {
+  if (!cart) {
     return <h3>Empty Cart</h3>;
   }
   return (
